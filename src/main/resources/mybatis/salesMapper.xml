@@ -12,4 +12,13 @@
         INSERT INTO Sales VALUES (TO_DATE(#{rdate},'YYYY-MM-DD'),#{price},#{gender})
     </insert>
 
+    <select id="gendersales" resultType="sales">
+        SELECT SUBSTR(TO_CHAR(rdate, 'YYYYMMDD'), 1, 6) AS rdate
+             , SUM(price) AS price
+             , GENDER
+        FROM sales
+        GROUP BY SUBSTR(TO_CHAR(rdate, 'YYYYMMDD'), 1, 6), GENDER
+        ORDER BY rdate, GENDER
+    </select>
+
 </mapper>
